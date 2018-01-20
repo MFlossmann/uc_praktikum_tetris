@@ -1,0 +1,30 @@
+* Tetris
+** Hardware layout
+*** Buttons: Shift-Register und PB5, PB6
+    - Shift register Buttons:
+      | Left | Rotate Counterclockwise | Rotate Clockwise | Right |
+      Left + Right : Fast drop
+    - PB5: Pause
+    - PB6: Reset
+** Software layout
+*** Playfield: 
+     - Bitmap with 40x10 entries (uint16_t[40])
+     - Nur 20 Zeilen sichtbar
+*** Game loop:
+    #+BEGIN_SRC python
+while(timer.not_ready):
+		button_map = poll_buttons()
+
+switch(button_map):
+		case directional_buttons:  # only one is pressed
+    		<...>
+    case rotate_button:
+        <...>
+    
+    add five to each item
+    end
+    end
+
+    pseudoinstance = new Pseudoclass instance
+
+#+END_SRC
