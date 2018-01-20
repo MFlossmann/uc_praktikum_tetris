@@ -1,0 +1,3 @@
+Es war mehr Arbeit als gedacht, die ganzen Flowcharts zu entwerfen.
+
+Irgendwie ist bei dieser Aufgabe wenig mit dem Microcontroller und mehr mit Programming im Allgemeinen zu tun.
