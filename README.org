@@ -1,12 +1,13 @@
 * Roadmap
 ** [x] Basic Flowchart
-*** [ ] Poll buttons ausformulieren
-*** [ ] Apply action ausf.
-*** [ ] Apply gravity ausf.
-*** [ ] send out ausf.
-*** [ ] Delete rows ausf.
-*** [ ] Insert new tetromino ausf.
+   - [x] Poll buttons ausformulieren
+   - [x] Apply action ausf.
+   - [x] Apply gravity ausf.
+   - [x] send out ausf.
+   - [x] Flush rows ausf.
+   - [x] Insert new tetromino ausf.
+   - [x] Interrupts ausformulieren
 ** Variablen erklären
-*** [x] Gravity
-*** [x] Game Field
-*** [x] Tetromino
+   - [x] Gravity
+   - [x] Game Field
+   - [x] Tetromino
