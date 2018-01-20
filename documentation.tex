@@ -1,0 +1,113 @@
+% Created 2018-01-20 Sat 15:12
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Michael Floßmann, Hendrik Vloet}
+\date{\today}
+\title{Concept of the Microcontroller Lab end of semester project}
+\hypersetup{
+ pdfauthor={Michael Floßmann, Hendrik Vloet},
+ pdftitle={Concept of the Microcontroller Lab end of semester project},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 25.3.1 (Org mode 9.1.5)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Tetris}
+\label{sec:orgb0bb6ea}
+The Flowcharts are appended in the zip file.
+\subsection{Hardware layout}
+\label{sec:orge42c8c6}
+\subsubsection{Buttons: Shift-Register und PB5, PB6}
+\label{sec:org399fab2}
+\begin{itemize}
+\item Shift register Buttons:
+\end{itemize}
+\begin{center}
+\begin{tabular}{c|c|c|c}
+PB1 & PB2 & PB3 & PB4\\
+Left & Rotate Counterclockwise & Rotate Clockwise & Right\\
+\end{tabular}
+\end{center}
+Left + Right : Fast drop
+\begin{itemize}
+\item PB5: Pause
+\item PB6: Reset
+\end{itemize}
+\subsection{Software layout}
+\label{sec:orgbb443ea}
+\subsubsection{Playfield:}
+\label{sec:org84e494e}
+\begin{itemize}
+\item Bitmap with 20x10 entries (\texttt{uint16\_t[20]})
+\item Top row: (19, :), bottom row: (0, :)
+\item Left column: (:, 0), right column: (:, 9)
+\end{itemize}
+\begin{enumerate}
+\item Implementation:
+\label{sec:orgccc8ab0}
+The Playfield shall be implemented as an array of \texttt{unsigned word}. Each entry in the array represents a row. Each bit in the row stands for block occupied (1) or block free (0).
+\end{enumerate}
+\subsubsection{Initialization}
+\label{sec:org22ca2b4}
+Initializes the timer, the serial terminal and other things.
+\subsubsection{Game loop:}
+\label{sec:org61ca272}
+See: Flowcharts
+\subsubsection{Tetrominos}
+\label{sec:orgd2235ad}
+\begin{enumerate}
+\item There are 7 types of gaming blocks, called "Tetrominos"
+\label{sec:orga7f5164}
+\begin{itemize}
+\item I
+\item T
+\item L
+\item J
+\item S
+\item Z
+\item O
+\end{itemize}
+\item The active tetromino is described in a struct like this:
+\label{sec:orgd90b3c3}
+\begin{verbatim}
+struct tetromino {
+  char type;
+  unsigned int pos_x;
+  unsigned int pos_y;
+  unsigned int orientation;
+};
+\end{verbatim}
+\begin{itemize}
+\item \texttt{type} describes which form the tetromino takes (i.e. \texttt{I}, \texttt{L}, \ldots{}).
+\item \texttt{pos\_x}, \texttt{pos\_y} describes the position on the playing field.
+\item \texttt{orientation} describes the orientation of the tetromino.
+\end{itemize}
+\item Once a tetromino can't fall any further, a new one is created at the position (5, 20))
+\label{sec:org3b99201}
+\end{enumerate}
+\subsubsection{Gravity value}
+\label{sec:orga84211d}
+The gravity describes the rate in which the active tetromino descends. It can be accelerated and (temporarily) stopped by turning the tetromino (see "easy spin"). It is reset at the start of each run of the game loop.
+\subsubsection{Send out}
+\label{sec:orge66cbcc}
+The routine to send out the Playfield. For each cell in the field the character to send out is:
+\begin{itemize}
+\item A whitespace for unoccupied
+\item A Block (ascii-code: 219) for occupied.
+\end{itemize}
+\end{document}
