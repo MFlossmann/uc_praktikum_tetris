@@ -8,8 +8,11 @@
     - PB6: Reset
 ** Software layout
 *** Playfield: 
-     - Bitmap with 40x10 entries (uint16_t[40])
-     - Nur 20 Zeilen sichtbar
+     - Bitmap with 20x10 entries (~uint16_t[20]~)
+     - Top row: (19, :), bottom row: (0, :)
+     - Left column: (:, 0), right column: (:, 9)
+**** Implementation:
+     The Playfield shall be implemented as an array of ~unsigned word~. Each entry in the array represents a row. Each bit in the row stands for block occupied (1) or block free (0).
 *** Game loop:
     #+BEGIN_SRC python
 while(timer.not_ready):
@@ -28,3 +31,27 @@ switch(button_map):
     pseudoinstance = new Pseudoclass instance
 
 #+END_SRC
+*** Tetrominos
+**** There are 7 types of gaming blocks, called "Tetrominos"
+     - I
+     - T
+     - L
+     - J
+     - S
+     - Z
+     - O
+**** The active tetromino is described in a struct like this:
+#+BEGIN_SRC c
+struct tetromino {
+  char type;
+  unsigned int pos_x;
+  unsigned int pos_y;
+  unsigned int orientation;
+};
+  #+END_SRC
+***** ~type~ describes which form the tetromino takes (i.e. ~'I'~, ~'L'~, ...).
+***** ~pos_x~, ~pos_y~ describes the position on the playing field.
+***** ~orientation~ describes the orientation of the tetromino.
+**** Once a tetromino can't fall any further, a new one is created at the position (5, 20))
+*** Gravity value
+    The gravity describes the rate in which the active tetromino descends. It can be accelerated and (temporarily) stopped by turning the tetromino (see "easy spin"). It is reset at the start of each run of the game loop.
